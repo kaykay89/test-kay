@@ -3,9 +3,7 @@ const Client = require('pg').Client
 const express = require("express")
 const app = express();
 const PORT = process.env.PORT || 5000
-
-
-
+app.use(express.json())
 
 const client = new Client({
 	user:"iqzrzazsdxbmbw",
@@ -16,15 +14,56 @@ const client = new Client({
 	ssl:true
 })
 
+app.get("/", (req, res) => res.sendFile(`${__dirname}/index.html`))
 
-app.get("/membres", async (req, res) => {
+app.get('/membres', async (req, res) => {	
 	const rows = await readMembres();
+	res.setHeader("content-type", "application/json")
 	res.send(JSON.stringify(rows))
 	
 })
+
+app.post('/membres', async (req, res) => {
+	let result = {}
+
+	try{
+	
+		const reqJson = req.body;
+		await createMembres(reqJson.nom, reqJson.lien);
+		result.success = true;
+		
+	} catch (e) {
+		result.success = false;
+	} finally {
+		res.setHeader("content-type", "application/json")
+		res.send(JSON.stringify(result))
+	}
+	
+})
+
+app.delete('/membres', async (req, res) => {
+	let result = {}
+
+	try{
+	
+		const reqJson = req.body;
+		await deleteMembres(reqJson.nom);
+		result.success = true;
+		
+	} catch (e) {
+		result.success = false;
+	} finally {
+		res.setHeader("content-type", "application/json")
+		res.send(JSON.stringify(result))
+	}
+	
+})
+
 app.listen(PORT, () => console.log(`Web server listening on port ${PORT}`))
 
 start()
+
+
 
 async function start() {
 	await connect();
@@ -38,6 +77,8 @@ async function start() {
 	const succesDelete = await deleteMembres("Emmrick Louis")
 	console.log(`Suppression est ${succesDelete}`)
 	*/
+	
+}	
 	
 	async function connect() {
 		try {
@@ -76,5 +117,5 @@ async function start() {
 		}
 	}
 	
-}
+
 
