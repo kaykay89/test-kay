@@ -1,0 +1,15 @@
+{
+  "name": "javascript_postgrest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "async": "node async.js" 
+ },
+  "author": "Kayla",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^7.12.1"
+  }
+}
