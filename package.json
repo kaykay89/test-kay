@@ -6,11 +6,12 @@
   "scripts": {
     "start": "node index.js",
     "test": "node index.js",
-    "async": "node async.js" 
- },
+    "async": "node async.js"
+  },
   "author": "Kayla",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "pg": "^7.12.1"
   }
 }
