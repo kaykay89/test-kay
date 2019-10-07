@@ -123,6 +123,7 @@ async function deleteMembres(nom) {
 async function deleteNull() {
 	try {
 		await pool.query("delete from famille where nom is null")
+		await pool.query("delete from famille where nom is empty")
 		return true
 	} catch(e) {
 		return false;
