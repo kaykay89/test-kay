@@ -27,12 +27,14 @@
 		<button id='btnCreate'>Ajouter un membre</button>
 				
 		<script>
+		var urlEnv = process.env.DATABASE_URL
+		var url = urlEnv.concat("", "/membres")
 		const btnCreate = document.getElementById("btnCreate")
 		btnCreate.addEventListener("click", async e => {
 			const jsonRequest = {}
         	jsonRequest.nom = prompt ("Entrez le nom du membre de la famille")
         	jsonRequest.lien = prompt ("Entrez le lien de parenté")
-        	const result = await fetch("/membres", {method: "POST", 
+        	const result = await fetch(url, {method: "POST", 
         		headers: { "content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
         	const success = await result.json();
            readMembres();
@@ -47,7 +49,7 @@
 			try {
 				const olMembre = document.getElementById("olMembre")
 				while(olMembre.firstChild) olMembre.removeChild(olMembre.firstChild)
-				const result = await fetch("/membres", {method: "GET"})
+				const result = await fetch(url, {method: "GET"})
 				const membres = await result.json();
 				membres.forEach(t=>{
 					const li = document.createElement("li")
@@ -57,7 +59,7 @@
 	                li.addEventListener("click", async e => {
 	                	const jsonRequest = {}
 	                	jsonRequest.nom = e.target.textContent;
-	                	const result = await fetch("/membres", {method: "DELETE", 
+	                	const result = await fetch(url, {method: "DELETE", 
 	                		headers: { "content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
 	                	const success = await result.json();
 	                   readMembres();
