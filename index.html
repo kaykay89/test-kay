@@ -13,13 +13,25 @@
 			
 		</ol>
 		
-		<button id='btnCreate'>Ajouter un membre</button>
+		<!--
 		
+		<form>
+  			Nom complet:<br>
+ 			 <input type="text" name="name"><br>
+  			Lien de parenté:<br>
+  			<input type="text" name="connexion">
+		</form>
+		
+		-->
+		
+		<button id='btnCreate'>Ajouter un membre</button>
+				
 		<script>
 		const btnCreate = document.getElementById("btnCreate")
 		btnCreate.addEventListener("click", async e => {
 			const jsonRequest = {}
-        	jsonRequest.membre = prompt ("Entrez le nom du membre de la famille")
+        	jsonRequest.nom = prompt ("Entrez le nom du membre de la famille")
+        	jsonRequest.lien = prompt ("Entrez le lien de parenté")
         	const result = await fetch("http://localhost:5000/membres", {method: "POST", 
         		headers: { "content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
         	const success = await result.json();
@@ -39,17 +51,17 @@
 				const membres = await result.json();
 				membres.forEach(t=>{
 					const li = document.createElement("li")
-	                li.textContent = t.text;
+	                li.textContent = t.nom;
 	                li.id = t.id;
 	                
 	                li.addEventListener("click", async e => {
 	                	const jsonRequest = {}
-	                	jsonRequest.id = e.target.id;
+	                	jsonRequest.nom = e.target.textContent;
 	                	const result = await fetch("http://localhost:5000/membres", {method: "DELETE", 
 	                		headers: { "content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
 	                	const success = await result.json();
 	                   readMembres();
-	                    alert("Effacé!")	
+	                    alert("Effacé!")
 	                })
 	                
 	                olMembre.appendChild(li)
