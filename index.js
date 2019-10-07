@@ -5,6 +5,10 @@ const app = express();
 const PORT = process.env.PORT || 5000
 app.use(express.json())
 
+const path = require('path')
+
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
 const pool = new Pool ({
 	connectionString: process.env.DATABASE_URL,
