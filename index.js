@@ -61,9 +61,9 @@ app.delete('/membres', async (req, res) => {
 
 app.listen(PORT, () => console.log(`Web server listening on port ${PORT}`))
 
-// start()
+start()
 
-const client = await pool.connect();
+
 
 async function start() {
 	await connect();
@@ -83,19 +83,19 @@ async function start() {
 	
 }	
 	
-/**	
+
 async function connect() {
 	try {
-		const client = await pool.connect();
+		await pool.connect();
 	} catch(e) {
 		console.error(`Erreur de connexion ${e}`)
 	}
 }
-*//
+
 	
 async function readMembres() {
 	try {
-		const results = await client.query("select * from famille")
+		const results = await pool.query("select * from famille")
 		return results.rows
 	} catch(e) {
 		return [];
@@ -104,7 +104,7 @@ async function readMembres() {
 	
 async function createMembres(nom, lien) {
 	try {
-		await client.query("insert into famille values ($1, $2)", [nom, lien]);
+		await pool.query("insert into famille values ($1, $2)", [nom, lien]);
 		return true
 	} catch(e){
 		return false;
@@ -113,7 +113,7 @@ async function createMembres(nom, lien) {
 	
 async function deleteMembres(nom) {
 	try {
-		await client.query("delete from famille where nom = $1", [nom])
+		await pool.query("delete from famille where nom = $1", [nom])
 		return true
 	} catch(e) {
 		return false;
@@ -122,7 +122,7 @@ async function deleteMembres(nom) {
 
 async function deleteNull() {
 	try {
-		await client.query("delete from famille where nom is null")
+		await pool.query("delete from famille where nom is null")
 		return true
 	} catch(e) {
 		return false;
