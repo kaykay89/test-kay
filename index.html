@@ -32,7 +32,7 @@
 			const jsonRequest = {}
         	jsonRequest.nom = prompt ("Entrez le nom du membre de la famille")
         	jsonRequest.lien = prompt ("Entrez le lien de parenté")
-        	const result = await fetch((process.env.DATABASE_URL)"/membres", {method: "POST", 
+        	const result = await fetch("/membres", {method: "POST", 
         		headers: { "content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
         	const success = await result.json();
            readMembres();
@@ -47,7 +47,7 @@
 			try {
 				const olMembre = document.getElementById("olMembre")
 				while(olMembre.firstChild) olMembre.removeChild(olMembre.firstChild)
-				const result = await fetch((process.env.DATABASE_URL)"/membres", {method: "GET"})
+				const result = await fetch("/membres", {method: "GET"})
 				const membres = await result.json();
 				membres.forEach(t=>{
 					const li = document.createElement("li")
@@ -57,7 +57,7 @@
 	                li.addEventListener("click", async e => {
 	                	const jsonRequest = {}
 	                	jsonRequest.nom = e.target.textContent;
-	                	const result = await fetch((process.env.DATABASE_URL)"/membres", {method: "DELETE", 
+	                	const result = await fetch("/membres", {method: "DELETE", 
 	                		headers: { "content-type": "application/json"}, body: JSON.stringify(jsonRequest) })
 	                	const success = await result.json();
 	                   readMembres();
