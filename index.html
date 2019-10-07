@@ -27,8 +27,8 @@
 		<button id='btnCreate'>Ajouter un membre</button>
 				
 		<script>
-		var urlEnv = process.env.DATABASE_URL
-		var url = urlEnv.concat("", "/membres")
+		//var urlEnv = process.env.DATABASE_URL
+		var url = "pages/membres"
 		const btnCreate = document.getElementById("btnCreate")
 		btnCreate.addEventListener("click", async e => {
 			const jsonRequest = {}
