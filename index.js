@@ -61,9 +61,9 @@ app.delete('/membres', async (req, res) => {
 
 app.listen(PORT, () => console.log(`Web server listening on port ${PORT}`))
 
-start()
+// start()
 
-
+const client = await pool.connect();
 
 async function start() {
 	await connect();
@@ -79,11 +79,11 @@ async function start() {
 	*/
 	
 	const membres = await deleteNull();
-	console.log("Suppression des NULL")
+	
 	
 }	
 	
-	
+/**	
 async function connect() {
 	try {
 		const client = await pool.connect();
@@ -91,6 +91,7 @@ async function connect() {
 		console.error(`Erreur de connexion ${e}`)
 	}
 }
+*//
 	
 async function readMembres() {
 	try {
@@ -125,6 +126,7 @@ async function deleteNull() {
 		return true
 	} catch(e) {
 		return false;
+		console.log("Incapable de supprimer les NULL")
 	}
 }
 
